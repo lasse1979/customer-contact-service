@@ -13,6 +13,8 @@ The HR API and notification channel is simplified to its max. There is no real c
 
 Also, in a real scenario the GraphQL API would probably be separated from the customer contact service since these kind of API setups usually calls more than one micro-service to serve queries. That is, some kind of gateway.
 
+The HR API will see all 10 or 12 digit numbers as valid.
+
 ## Building & Running
 
 There is a docker-compose with the customer contact service and the database used by the service.
@@ -33,3 +35,7 @@ To use:
 ```
 
 The GraphQL playground including API documentation is accessed through http://localhost:8042/ui/playground. GraphQL clients would use http://localhost:8042/query as their endpoint.
+
+## Tests
+None
+

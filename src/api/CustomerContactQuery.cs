@@ -15,7 +15,7 @@ namespace CustomerContact.Api
             Field<CustomerContactType>(
                 "customerContact",
                 arguments: new QueryArguments(
-                    new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "id", Description = "identity of the customer" }
+                    new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id", Description = "identity of the customer" }
                 ),
                 resolve: context => repository.GetById(context.GetArgument<Guid>("id"))
             );

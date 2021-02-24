@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Net.Mail;
 
 namespace CustomerContact.Domain.Entity
 {
@@ -11,7 +13,7 @@ namespace CustomerContact.Domain.Entity
     public int ZipCode { get; set; }
     public string Country { get; set; }
     public string PhoneNumber { get; set; }
-    
+
     public void SetNewId()
     {
       Id = Guid.NewGuid();
