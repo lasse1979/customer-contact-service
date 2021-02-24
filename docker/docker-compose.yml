@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  db:
+    container_name: mssql
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    restart: unless-stopped
+    environment:
+      SA_PASSWORD: P@ssw0rd
+      ACCEPT_EULA: Y
+    ports:
+      - "12433:1433"
+    volumes:
+      - db-data:/var/opt/mssql
+    networks:
+      - servicenet
+
+  app:
+    container_name: customercontact
+    image: seb/customercontact
+    environment:
+      DB_HOST: db
+      DB_USER: sa
+      DB_PASSWORD: P@ssw0rd
+    depends_on:
+     - db
+    ports:
+      - "8042:80"
+    networks:
+      - servicenet
+
+volumes:
+  db-data:
+
+networks:
+  servicenet:

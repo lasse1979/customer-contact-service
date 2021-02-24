@@ -15,6 +15,10 @@ services:
         # On Linux, you may need to update USER_UID and USER_GID below if not your local UID is not 1000.
         USER_UID: 1000
         USER_GID: 1000
+    environment:
+      DB_HOST: db
+      DB_USER: sa
+      DB_PASSWORD: P@ssw0rd
 
     volumes:
       - ..:/workspace:cached
@@ -37,6 +41,8 @@ services:
     environment:
       SA_PASSWORD: P@ssw0rd
       ACCEPT_EULA: Y
+    ports:
+      - "11433:1433"
 
     # Add "forwardPorts": ["1433"] to **devcontainer.json** to forward MSSQL locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)

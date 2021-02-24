@@ -1,5 +1,7 @@
 using CustomerContact.Api;
 using CustomerContact.Api.Types;
+using CustomerContact.Domain.Repository;
+using CustomerContact.Infrastructure.Persistence;
 using GraphQL.Server;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
@@ -14,11 +16,13 @@ namespace CustomerContact
   {
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddSingleton<CustomerContactData>();
+      services.AddTransient<ICustomerContactCommand, CustomerContactCommand>();
+      services.AddTransient<ICustomerContactRepository, CustomerContactRepository>();
+
       services.AddSingleton<CustomerContactQuery>();
       services.AddSingleton<CustomerContactMutation>();
-      services.AddSingleton<CustomerContactInfoType>();
-      services.AddSingleton<CustomerContactInfoInputType>();
+      services.AddSingleton<CustomerContactType>();
+      services.AddSingleton<NewCustomerContactInputType>();
       services.AddSingleton<ISchema, CustomerContactSchema>();
 
       services.AddLogging(builder => builder.AddConsole());

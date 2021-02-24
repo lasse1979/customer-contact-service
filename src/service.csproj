@@ -6,6 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="./sql/create-table.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="dapper" Version="2.0.78" />
+    <PackageReference Include="dbup" Version="4.5.0" />
     <PackageReference Include="GraphQL" Version="3.3.2" />
     <PackageReference Include="GraphQL.Server.Transports.AspNetCore.SystemTextJson" Version="4.4.1" />
     <PackageReference Include="GraphQL.Server.Ui.Playground" Version="4.4.1" />

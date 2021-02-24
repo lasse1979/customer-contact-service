@@ -1,36 +1,25 @@
-using CustomerContact.Api.Model;
+using System;
 using CustomerContact.Api.Types;
+using CustomerContact.Domain.Repository;
 using GraphQL;
 using GraphQL.Types;
 
 namespace CustomerContact.Api
 {
-  /// <example>
-  /// This is an example JSON request for a mutation
-  /// {
-  ///   "query": "mutation ($human:HumanInput!){ createHuman(human: $human) { id name } }",
-  ///   "variables": {
-  ///     "human": {
-  ///       "name": "Boba Fett"
-  ///     }
-  ///   }
-  /// }
-  /// </example>
   public class CustomerContactMutation : ObjectGraphType
   {
-    public CustomerContactMutation(CustomerContactData data)
+    public CustomerContactMutation(ICustomerContactRepository repository)
     {
       Name = "Mutation";
 
-      Field<CustomerContactInfoType>(
+      Field<CustomerContactType>(
           "createCustomerContact",
           arguments: new QueryArguments(
-              new QueryArgument<NonNullGraphType<CustomerContactInfoInputType>> { Name = "NewCustomerContactInfo" }
+              new QueryArgument<NonNullGraphType<NewCustomerContactInputType>> { Name = "customerContact" }
           ),
-          resolve: context =>
+          resolve: context => 
           {
-            var info = context.GetArgument<CustomerContactInfo>("NewCustomerContactInfo");
-            return data.AddCustomerContactInfo(info);
+            return repository.Add(context.GetArgument<Domain.Entity.CustomerContact>("customerContact")).GetAwaiter().GetResult();
           });
     }
   }

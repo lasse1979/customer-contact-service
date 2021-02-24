@@ -2,21 +2,27 @@ using System;
 using GraphQL;
 using GraphQL.Types;
 using CustomerContact.Api.Types;
+using CustomerContact.Domain.Repository;
 
 namespace CustomerContact.Api
 {
-    public class CustomerContactQuery : ObjectGraphType<object>
+    public class CustomerContactQuery : ObjectGraphType
     {
-        public CustomerContactQuery(CustomerContactData data)
+        public CustomerContactQuery(ICustomerContactRepository repository)
         {
             Name = "Query";
 
-            Field<CustomerContactInfoType>(
-                "customercontactinfo",
+            Field<CustomerContactType>(
+                "customerContact",
                 arguments: new QueryArguments(
                     new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "id", Description = "identity of the customer" }
                 ),
-                resolve: context => data.GetCustomerContactInfoByIdAsync(context.GetArgument<string>("id"))
+                resolve: context => repository.GetById(context.GetArgument<Guid>("id"))
+            );
+            
+            Field<ListGraphType<CustomerContactType>>(
+                "customerContacts",
+                resolve: context => repository.GetAll()
             );
         }
     }
